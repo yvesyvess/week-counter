@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>IT Degree Week Widget</title>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
   <style>
     /* Reset & base */
     body,
@@ -19,73 +19,55 @@
       color: #58a6ff;
     }
 
-    /* Widget container */
-    .widget {
-      background: rgba(36, 41, 46, 0.8);
-      backdrop-filter: blur(6px);
-      color: #39FF14;
-      max-width: 240px;
-      margin: 20px auto;
-      padding: 12px 18px;
-      border-radius: 8px;
-      border: 1px solid #238636;
-      font-size: 14px;
-      letter-spacing: 1px;
+        /* Outer box container to hold the widget */
+    .widget-container {
+      max-width: 320px;
+      margin: 40px auto;
+      background: #e0e0e0; /* Light box background */
+      border-radius: 16px;
+      padding: 20px 25px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.1);
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
-      box-shadow: none;
+      justify-content: center;
     }
+    
+    /* Widget itself: transparent background */
+    .widget {
+      background: transparent;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-family: 'Poppins', sans-serif;
+      user-select: none;
+    }
+    
+    /* Week text: black and bold */
     .week-box {
       font-weight: 700;
       font-size: 24px;
-      letter-spacing: 2px;
-      padding-right: 12px;
-      border-right: 2px solid #238636;
-      position: relative;
+      color: #000000;
+      letter-spacing: 1.2px;
+    }
+    
+    /* Date range text: softer gray */
+    .date-display {
+      font-weight: 500;
+      font-size: 18px;
+      color: #555555;
+      font-family: 'Poppins', sans-serif;
     }
 
-    /* Blinking cursor */
-    .week-box {
-      font-weight: 600;
-      font-size: 16px;
-      letter-spacing: 1px;
-      padding: 0;
-      border: none;
-      position: relative;
-  }
-
-    @keyframes blink {
-
-      0%,
-      50% {
-        opacity: 1;
-      }
-
-      50.01%,
-      100% {
-        opacity: 0;
-      }
-    }
-
-      .date-display {
-        background-color: transparent;
-        color: #cdd9e5;
-        padding: 4px 10px;
-        border-radius: 4px;
-        border: 1px solid #58a6ff;
-        font-size: 13px;
-    }  
   </style>
 </head>
 
 <body>
 
+  <div class="widget-container">
   <div class="widget">
     <div class="week-box" id="weekDisplay"></div>
     <div class="date-display" id="dateRange"></div>
   </div>
+</div>
 
   <script>
     // === Week & Date display code ===
