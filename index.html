@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Week Widget</title>
+  <title>Floating Week Widget</title>
   <style>
     html,
     body {
@@ -18,28 +18,46 @@
       background: transparent;
       font-family: Arial, sans-serif;
       color: #000;
+      overflow: hidden;
     }
 
     .container {
       position: relative;
-      /* For absolutely positioning wave */
       width: 100%;
       max-width: 350px;
       height: 100px;
       border-radius: 14px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
       background: transparent;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 20px;
-      padding: 0 20px;
+      padding: 15px 30px;
       box-sizing: border-box;
       font-weight: 600;
       font-size: 18px;
       overflow: hidden;
-      /* Hide overflow of wave */
-      color: #000;
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+      /* subtle lift */
+      /* Make the container float gently */
+      animation: floatContainer 6s ease-in-out infinite;
+    }
+
+    /* The glowing blurred background behind the text */
+    .container::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 90%;
+      height: 70%;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 12px;
+      filter: blur(10px);
+      z-index: 0;
+      /* softly pulse */
+      animation: pulseGlow 6s ease-in-out infinite;
     }
 
     /* The wave background */
@@ -47,12 +65,18 @@
       position: absolute;
       top: 0;
       left: 0;
-      width: 100%;
+      width: 120%;
+      /* make wider for smooth horizontal movement */
       height: 100%;
       pointer-events: none;
-      /* So it doesn't interfere with clicking/selecting */
       z-index: 0;
-      /* Behind the content */
+      animation: waveMove 10s linear infinite;
+    }
+
+    /* The second wave with different animation for layering */
+    .wave-bg.second {
+      opacity: 0.6;
+      animation: waveMoveReverse 12s linear infinite;
     }
 
     /* Make sure text is above the wave */
@@ -60,6 +84,8 @@
     .date {
       position: relative;
       z-index: 1;
+      text-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      /* NO floating animation */
     }
 
     .week {
@@ -76,6 +102,62 @@
       margin: 0;
       align-self: center;
     }
+
+    /* Animations */
+
+    @keyframes waveMove {
+      0% {
+        transform: translateX(0) translateY(0);
+      }
+
+      50% {
+        transform: translateX(-10%) translateY(5%);
+      }
+
+      100% {
+        transform: translateX(0) translateY(0);
+      }
+    }
+
+    @keyframes waveMoveReverse {
+      0% {
+        transform: translateX(0) translateY(0);
+      }
+
+      50% {
+        transform: translateX(10%) translateY(-5%);
+      }
+
+      100% {
+        transform: translateX(0) translateY(0);
+      }
+    }
+
+    @keyframes floatContainer {
+      0% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-4px);
+      }
+
+      100% {
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes pulseGlow {
+
+      0%,
+      100% {
+        background: rgba(255, 255, 255, 0.3);
+      }
+
+      50% {
+        background: rgba(255, 255, 255, 0.4);
+      }
+    }
   </style>
 </head>
 
@@ -84,18 +166,28 @@
     <svg class="wave-bg" viewBox="0 0 350 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <linearGradient id="pastelGradient" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stop-color="#A9D6E5" /> <!-- light pastel blue -->
-          <stop offset="50%" stop-color="#89CFF0" /> <!-- baby blue -->
-          <stop offset="100%" stop-color="#B0E0E6" /> <!-- powder blue -->
+          <stop offset="0%" stop-color="#A9D6E5" />
+          <stop offset="50%" stop-color="#89CFF0" />
+          <stop offset="100%" stop-color="#B0E0E6" />
         </linearGradient>
       </defs>
       <path fill="url(#pastelGradient)" d="M0,40 C70,90 280,0 350,50 L350,100 L0,100 Z" />
-      <path fill="url(#pastelGradient)" opacity="0.6" d="M0,60 C50,20 300,90 350,40 L350,100 L0,100 Z" />
+    </svg>
+    <svg class="wave-bg second" viewBox="0 0 350 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="pastelGradient2" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#A9D6E5" />
+          <stop offset="50%" stop-color="#89CFF0" />
+          <stop offset="100%" stop-color="#B0E0E6" />
+        </linearGradient>
+      </defs>
+      <path fill="url(#pastelGradient2)" d="M0,60 C50,20 300,90 350,40 L350,100 L0,100 Z" />
     </svg>
 
     <div class="week" id="week"></div>
     <div class="date" id="date"></div>
   </div>
+
   <script>
     const start = new Date('2025-07-21'),
       today = new Date(),
@@ -106,7 +198,10 @@
     startWeek.setDate(start.getDate() + (weekNum - 1) * 7);
     const endWeek = new Date(startWeek);
     endWeek.setDate(startWeek.getDate() + 6);
-    const fmt = d => d.toLocaleDateString('en-GB', {day: 'numeric', month: 'short'}).toUpperCase();
+    const fmt = d => d.toLocaleDateString('en-GB', {
+      day: 'numeric',
+      month: 'short'
+    }).toUpperCase();
     document.getElementById('week').textContent = `WEEK ${weekNum}`;
     document.getElementById('date').textContent = `${fmt(startWeek)} – ${fmt(endWeek)}`;
   </script>
