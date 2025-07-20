@@ -1,103 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>IT Degree Week Widget - Notion Embed</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
+  <title>Week Widget</title>
   <style>
-    /* Reset unwanted margins/padding */
-    body, .widget-container, .widget {
-      margin: 0;
-      padding: 0;
-    }
-
-    /* Make page background transparent for Notion embed */
     body, html {
-      margin: 0;
-      padding: 0;
+      margin: 0; padding: 0;
+      width: 100%; height: 100%;
+      font-family: Arial, sans-serif;
       background: transparent;
-      height: auto;
-      width: 100%;
-      font-family: 'Poppins', sans-serif;
-    }
-    /* Outer container: light box */
-    .widget-container {
-      width: 100%;        /* Fill the iframe's full width */
-      max-width: 100%; /* Or just 100% */
-      height: 100px;
-      margin: 0 auto;
-      background: #e0e0e0;
-      border-radius: 12px;
-      padding: 12px 20px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-      display: flex;       /* Flex container */
-      justify-content: center; /* Center horizontally */
-      align-items: center; /* Center vertically */
-      overflow: hidden;
-      box-sizing: border-box; /* Include padding/border in width */
-    }
-
-
-    /* Widget itself transparent and horizontal layout */
-    .widget {
-      font-size: 16px;
       display: flex;
-      gap: 12px;
-      user-select: none;
-      color: #000;
-      flex-wrap: nowrap;
+      justify-content: center;
       align-items: center;
     }
-
-    /* Week number styling */
-    .week-box {
+    .container {
+      width: 100%;
+      max-width: 374.5px;
+      height: 100px;
+      background: #e0e0e0;
+      border-radius: 14px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      display: flex;
+      gap: 20px;
+      padding: 0 20px;
+      box-sizing: border-box;
+      color: #000;
+      font-weight: 600;
       font-size: 18px;
-      font-weight: 700;
-      letter-spacing: 1px;
     }
-
-    /* Date range styling */
-    .date-display {
-      font-size: 13px;
+    .week {
+      font-size: 26px;
+      white-space: nowrap;
+    }
+    .date {
       color: #555;
-    }  
+      white-space: nowrap;
+      align-self: center;
+    }
   </style>
 </head>
-
 <body>
-  <div class="widget-container">
-    <div class="widget">
-      <div class="week-box" id="weekDisplay"></div>
-      <div class="date-display" id="dateRange"></div>
-    </div>
-  </div>
-
-  <script>
-    // Calculate current week number since start date
-    const startDate = new Date('2025-07-21');
-    const today = new Date();
-
-    const msInDay = 1000 * 60 * 60 * 24;
-    const diffDays = Math.floor((today - startDate) / msInDay);
-    const weekNum = diffDays < 0 ? 1 : Math.floor(diffDays / 7) + 1;
-
-    const thisWeekStart = new Date(startDate);
-    thisWeekStart.setDate(startDate.getDate() + (weekNum - 1) * 7);
-    const thisWeekEnd = new Date(thisWeekStart);
-    thisWeekEnd.setDate(thisWeekStart.getDate() + 6);
-
-    const formatDate = (date) =>
-      date.toLocaleDateString('en-GB', {
-        day: 'numeric',
-        month: 'short',
-      }).toUpperCase();
-
-    // Set the text content in the widget
-    document.getElementById('weekDisplay').textContent = `WEEK ${weekNum}`;
-    document.getElementById('dateRange').textContent = `${formatDate(thisWeekStart)} – ${formatDate(thisWeekEnd)}`;
-  </script>
-</body>
-
-</html>
