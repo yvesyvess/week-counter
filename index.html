@@ -15,34 +15,40 @@
 
     /* Make page background transparent for Notion embed */
     body, html {
+      margin: 0;
+      padding: 0;
       background: transparent;
       height: auto;
+      width: 100%;
       font-family: 'Poppins', sans-serif;
-      color: #000000;
     }
-
     /* Outer container: light box */
     .widget-container {
-      max-width: 180px;  /* slightly less than 186 to avoid scrollbars */
+      width: 100%;        /* Fill the iframe's full width */
+      max-width: 374.5px; /* Or just 100% */
       height: 100px;
       margin: 0 auto;
       background: #e0e0e0;
       border-radius: 12px;
-      padding: 8px 12px;
+      padding: 12px 20px;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
-      overflow: hidden; /* ensure no overflow */
+      display: flex;       /* Flex container */
+      justify-content: center; /* Center horizontally */
+      align-items: center; /* Center vertically */
+      overflow: hidden;
+      box-sizing: border-box; /* Include padding/border in width */
     }
 
 
     /* Widget itself transparent and horizontal layout */
     .widget {
-      font-size: 14px;
-      gap: 8px;
-      color: #000;
+      font-size: 16px;
+      display: flex;
+      gap: 12px;
       user-select: none;
+      color: #000;
+      flex-wrap: nowrap;
+      align-items: center;
     }
 
     /* Week number styling */
