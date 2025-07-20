@@ -19,18 +19,6 @@
       color: #58a6ff;
     }
 
-    /* Matrix canvas fills background */
-    #matrix {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: 0;
-      background: #0d1117;
-      display: block;
-    }
-
     /* Widget container */
     .widget {
       position: relative;
@@ -108,7 +96,6 @@
 </head>
 
 <body>
-  <canvas id="matrix"></canvas>
 
   <div class="widget">
     <div class="week-box" id="weekDisplay"></div>
@@ -139,46 +126,6 @@
     document.getElementById('weekDisplay').textContent = `WEEK ${weekNum}`;
     document.getElementById('dateRange').textContent = `${formatDate(thisWeekStart)} – ${formatDate(thisWeekEnd)}`;
 
-    // === Matrix rain animation code ===
-    const canvas = document.getElementById('matrix');
-    const ctx = canvas.getContext('2d');
-
-    function resize() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    }
-    resize();
-    window.addEventListener('resize', resize);
-
-    const letters = ['0', '1'];
-    const fontSize = 16;
-    const columns = Math.floor(canvas.width / fontSize);
-
-    const drops = [];
-    for (let x = 0; x < columns; x++) {
-      drops[x] = Math.random() * canvas.height / fontSize;
-    }
-
-    function draw() {
-      // Black BG with slight opacity for trailing effect
-      ctx.fillStyle = 'rgba(13, 17, 23, 0.1)';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      ctx.fillStyle = '#39FF14'; // Neon green
-      ctx.font = fontSize + 'px JetBrains Mono, monospace';
-
-      for (let i = 0; i < drops.length; i++) {
-        const text = letters[Math.floor(Math.random() * letters.length)];
-        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-
-        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-          drops[i] = 0;
-        }
-        drops[i]++;
-      }
-    }
-
-    setInterval(draw, 55);
   </script>
 </body>
 
