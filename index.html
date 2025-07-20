@@ -5,6 +5,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Week Widget</title>
+  <!-- Import Inter font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <style>
     html,
     body {
@@ -16,7 +18,7 @@
       justify-content: center;
       align-items: center;
       background: transparent;
-      font-family: Arial, sans-serif;
+      font-family: 'Inter', sans-serif;
       color: #000;
     }
 
@@ -39,7 +41,6 @@
       box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
     }
 
-    /* The glowing blurred background behind the text */
     .container::before {
       content: "";
       position: absolute;
@@ -54,7 +55,6 @@
       z-index: 0;
     }
 
-    /* The wave background */
     .wave-bg {
       position: absolute;
       top: 0;
@@ -65,7 +65,6 @@
       z-index: 0;
     }
 
-    /* Make sure text is above the wave */
     .week,
     .date {
       position: relative;
@@ -74,7 +73,7 @@
     }
 
     .week {
-      font-size: 26px;
+      font-size: 22px;
       white-space: nowrap;
       line-height: 1;
       margin: 0;
@@ -118,7 +117,10 @@
     startWeek.setDate(start.getDate() + (weekNum - 1) * 7);
     const endWeek = new Date(startWeek);
     endWeek.setDate(startWeek.getDate() + 6);
-    const fmt = d => d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' }).toUpperCase();
+    const fmt = d => d.toLocaleDateString('en-GB', {
+      day: 'numeric',
+      month: 'short'
+    }).toUpperCase();
     document.getElementById('week').textContent = `WEEK ${weekNum}`;
     document.getElementById('date').textContent = `${fmt(startWeek)} – ${fmt(endWeek)}`;
   </script>
