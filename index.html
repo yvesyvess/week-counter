@@ -1,69 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Week Widget</title>
-<style>
-  html, body {
-    margin: 0; padding: 0;
-    width: 100%; height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: transparent;
-    font-family: Arial, sans-serif;
-    color: #000;
-  }
-  .container {
-    width: 100%;
-    max-width: 374.5px;
-    height: 100px;
-    border-radius: 14px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    background: #e0e0e0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
-    padding: 0 20px;
-    box-sizing: border-box;
-    font-weight: 600;
-    font-size: 18px;
-  }
-  .week {
-    font-size: 26px;
-    white-space: nowrap;
-    line-height: 1;
-    margin: 0;
-  }
-  .date {
-    color: #555;
-    white-space: nowrap;
-    line-height: 1;
-    margin: 0;
-    align-self: center;
-  }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Week Widget</title>
+  <style>
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: transparent;
+      font-family: Arial, sans-serif;
+      color: #000;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 100%;
+      height: 100px;
+      border-radius: 14px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      background: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      padding: 0 20px;
+      box-sizing: border-box;
+      font-weight: 600;
+      font-size: 18px;
+    }
+
+    .week {
+      font-size: 26px;
+      white-space: nowrap;
+      line-height: 1;
+      margin: 0;
+    }
+
+    .date {
+      color: #555;
+      white-space: nowrap;
+      line-height: 1;
+      margin: 0;
+      align-self: center;
+    }
+  </style>
 </head>
+
 <body>
   <div class="container">
     <div class="week" id="week"></div>
     <div class="date" id="date"></div>
   </div>
-<script>
-  const start = new Date('2025-07-21'),
-        today = new Date(),
-        msDay = 864e5,
-        diff = Math.floor((today - start) / msDay),
-        weekNum = diff < 0 ? 1 : Math.floor(diff / 7) + 1,
-        startWeek = new Date(start);
-  startWeek.setDate(start.getDate() + (weekNum - 1) * 7);
-  const endWeek = new Date(startWeek);
-  endWeek.setDate(startWeek.getDate() + 6);
-  const fmt = d => d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' }).toUpperCase();
-  document.getElementById('week').textContent = `WEEK ${weekNum}`;
-  document.getElementById('date').textContent = `${fmt(startWeek)} – ${fmt(endWeek)}`;
-</script>
+  <script>
+    const start = new Date('2025-07-21'),
+      today = new Date(),
+      msDay = 864e5,
+      diff = Math.floor((today - start) / msDay),
+      weekNum = diff < 0 ? 1 : Math.floor(diff / 7) + 1,
+      startWeek = new Date(start);
+    startWeek.setDate(start.getDate() + (weekNum - 1) * 7);
+    const endWeek = new Date(startWeek);
+    endWeek.setDate(startWeek.getDate() + 6);
+    const fmt = d => d.toLocaleDateString('en-GB', {day: 'numeric', month: 'short'}).toUpperCase();
+    document.getElementById('week').textContent = `WEEK ${weekNum}`;
+    document.getElementById('date').textContent = `${fmt(startWeek)} – ${fmt(endWeek)}`;
+  </script>
 </body>
+
 </html>
