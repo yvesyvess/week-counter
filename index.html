@@ -4,77 +4,74 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>IT Degree Week Widget</title>
+  <title>IT Degree Week Widget - Notion Embed</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
   <style>
+    /* Reset unwanted margins/padding */
     body, .widget-container, .widget {
       margin: 0;
       padding: 0;
-}
-    /* Reset & base */
-    body,
-    html {
-      margin: 0;
-      height: auto;
-      background: transparent;
-      overflow: hidden;
-      font-family: 'Poppins', sans-serif;
-      position: relative;
-      color: #000;
     }
 
-    /* Outer box container to hold the widget */
+    /* Make page background transparent for Notion embed */
+    body, html {
+      background: transparent;
+      height: auto;
+      font-family: 'Poppins', sans-serif;
+      color: #000000;
+    }
+
+    /* Outer container: light box */
     .widget-container {
       max-width: 320px;
-      margin: 0 auto;    /* Remove big vertical margin */
-      background: #e0e0e0; /* Keep light box */
+      margin: 0 auto;
+      background: #e0e0e0;
       border-radius: 16px;
       padding: 12px 20px;
-      box-shadow: 0 6px 15px rgba(0,0,0,0.1);
-      display: inline-flex;  /* shrink-wrap width */
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+      display: inline-flex; /* shrink-wrap width */
       justify-content: center;
     }
-    
-    /* Widget itself: transparent background */
+
+    /* Widget itself transparent and horizontal layout */
     .widget {
       background: transparent;
       display: flex;
       align-items: center;
       gap: 16px;
-      font-family: 'Poppins', sans-serif;
       user-select: none;
-    }
-    
-    /* Week text: black and bold */
-    .week-box {
-      font-weight: 700;
-      font-size: 24px;
+      font-weight: 600;
+      font-size: 18px;
       color: #000000;
+    }
+
+    /* Week number styling */
+    .week-box {
+      font-size: 24px;
+      font-weight: 700;
       letter-spacing: 1.2px;
     }
-    
-    /* Date range text: softer gray */
+
+    /* Date range styling */
     .date-display {
-      font-weight: 500;
       font-size: 18px;
+      font-weight: 500;
       color: #555555;
       font-family: 'Poppins', sans-serif;
     }
-
   </style>
 </head>
 
 <body>
-
   <div class="widget-container">
-  <div class="widget">
-    <div class="week-box" id="weekDisplay"></div>
-    <div class="date-display" id="dateRange"></div>
+    <div class="widget">
+      <div class="week-box" id="weekDisplay"></div>
+      <div class="date-display" id="dateRange"></div>
+    </div>
   </div>
-</div>
 
   <script>
-    // === Week & Date display code ===
+    // Calculate current week number since start date
     const startDate = new Date('2025-07-21');
     const today = new Date();
 
@@ -93,10 +90,9 @@
         month: 'short',
       }).toUpperCase();
 
-    // Set week and date text
+    // Set the text content in the widget
     document.getElementById('weekDisplay').textContent = `WEEK ${weekNum}`;
     document.getElementById('dateRange').textContent = `${formatDate(thisWeekStart)} – ${formatDate(thisWeekEnd)}`;
-
   </script>
 </body>
 
